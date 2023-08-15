@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Application Météo</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container text-center">
+        <h1 class="mt-5">Application Météo</h1>
+        <div class="row justify-content-center mt-4">
+            <div class="col-md-6">
+                <input type="text" id="cityInput" class="form-control form-control-sm smaller-input" placeholder="City">
+            </div>
+            <div class="col-md-2 mt-2 mt-md-0">
+                <button id="searchButton" class="btn btn-primary btn-sm btn-block">Search</button>
+            </div>
+        </div>
+        <div id="weatherInfo" class="mt-4"></div>
+    </div>
+    <script>
+        const API_KEY = 'ce71823fee3887595b792d858013d055';
+
+const searchButton = document.getElementById('searchButton');
+const cityInput = document.getElementById('cityInput');
+const weatherInfo = document.getElementById('weatherInfo');
+const body = document.body;
+
+searchButton.addEventListener('click', () => {
+    const city = cityInput.value;
+    fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.cod === 200) {
+                const temperature = data.main.temp;
+                const weatherDescription = data.weather[0].description;
+                weatherInfo.innerHTML = `
+                    <p>Température à ${city} : ${temperature}°C</p>
+                    <p>Description : ${weatherDescription}</p>
+                `;
+                setBackgroundImage(weatherDescription);
+            } else {
+                weatherInfo.innerHTML = "Erreur lors de la récupération des données météorologiques.";
+            }
+        })
+        .catch(error => {
+            console.error("Erreur lors de la requête :", error);
+            weatherInfo.innerHTML = "Une erreur est survenue. Veuillez réessayer plus tard.";
+        });
+});
+
+function setBackgroundImage(description) {
+    if (description.includes("clear")) {
+        body.style.backgroundImage = "url('clear-sky.jpg')";
+    } else if (description.includes("rain")) {
+        body.style.backgroundImage = "url('rain.jpg')";
+    } else if (description.includes("snow")) {
+        body.style.backgroundImage = "url('snow.jpg')";
+    } else if (description.includes("mist")) {
+        body.style.backgroundImage = "url('mist.jpg')";
+    } else {
+        body.style.backgroundImage = "url('pexels-rocky-gendu-17679977.jpg')";
+    }
+}
+    </script>
+</body>
+</html>
