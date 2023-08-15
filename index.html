@@ -24,7 +24,8 @@
         <div id="weatherInfo" class="mt-4"></div>
     </div>
     <script>
-        const API_KEY = 'ce71823fee3887595b792d858013d055';
+       const API_KEY = 'ce71823fee3887595b792d858013d055';
+const baseUrl = 'https://api.openweathermap.org/data/2.5/weather';
 
 const searchButton = document.getElementById('searchButton');
 const cityInput = document.getElementById('cityInput');
@@ -33,7 +34,7 @@ const body = document.body;
 
 searchButton.addEventListener('click', () => {
     const city = cityInput.value;
-    fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`)
+    fetch(`${baseUrl}?q=${city}&appid=${API_KEY}&units=metric`)
         .then(response => response.json())
         .then(data => {
             if (data.cod === 200) {
@@ -61,8 +62,6 @@ function setBackgroundImage(description) {
         body.style.backgroundImage = "url('rain.jpg')";
     } else if (description.includes("snow")) {
         body.style.backgroundImage = "url('snow.jpg')";
-    } else if (description.includes("mist")) {
-        body.style.backgroundImage = "url('mist.jpg')";
     } else {
         body.style.backgroundImage = "url('pexels-rocky-gendu-17679977.jpg')";
     }
@@ -70,3 +69,4 @@ function setBackgroundImage(description) {
     </script>
 </body>
 </html>
+
