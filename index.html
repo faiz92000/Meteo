@@ -12,7 +12,7 @@
 </head>
 <body>
     <div class="container text-center">
-        <h1 class="mt-5">Application Météo</h1>
+        <h1 class="mt-5">Météo</h1>
         <div class="row justify-content-center mt-4">
             <div class="col-md-6">
                 <input type="text" id="cityInput" class="form-control form-control-sm smaller-input" placeholder="Ville">
@@ -62,6 +62,8 @@ function setBackgroundImage(description) {
         body.style.backgroundImage = "url('rain.jpg')";
     } else if (description.includes("snow")) {
         body.style.backgroundImage = "url('snow.jpg')";
+    } else if (description.includes("mist")) {
+        body.style.backgroundImage = "url('mist.jpg')";
     } else {
         body.style.backgroundImage = "url('pexels-rocky-gendu-17679977.jpg')";
     }
